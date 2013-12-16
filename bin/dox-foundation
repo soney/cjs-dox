@@ -9,7 +9,7 @@ var program   = require('commander'),
     fs        = require('fs'),
     mkdirp    = require('mkdirp'),
     path      = require('path'),
-    dox       = require('dox'),
+    dox       = require('../lib/dox'),
     formatter = require('../lib/dox-foundation');
 
 /**
