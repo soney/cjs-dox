@@ -53,10 +53,14 @@
     "mkdirp": "*",
     "walkdir": "~0.0.7",
     "stylus": "~0.33.1",
-    "rimraf": "2.x"
+    "rimraf": "2.x",
+    "github-flavored-markdown": ">= 0.0.1",
+    "commander": "0.6.1"
   },
   "devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt": "~0.3.17",
+	"mocha": "*",
+    "should": "*"
   },
   "keywords": [
     "dox",
