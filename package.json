@@ -48,12 +48,12 @@
   },
   "dependencies": {
     "underscore": "*",
-    "dox": "~0.4.3",
     "commander": "~1.2.0",
     "jade": "*",
     "mkdirp": "*",
     "walkdir": "~0.0.7",
-    "stylus": "~0.33.1"
+    "stylus": "~0.33.1",
+    "rimraf": "2.x"
   },
   "devDependencies": {
     "grunt": "~0.3.17"
