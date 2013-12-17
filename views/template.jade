@@ -3,70 +3,44 @@ html
   head
     include ./_head.jade
 
-  body
-    .row
-      .small-12.columns
-        h1.page-title= title
-          if subTitle
-            small=' '+subTitle
-    .row
-      #nav.large-3.columns
-        .section-container.accordian(data-section="accordian", data-options="")
-          if locals.structure
-            each file in structure
-              if file
-                .section(class= (currentFile === file.source.full) ? 'active':'')
-                  if file.methods
-                    if file.link
-                      p.title(data-section-title)
-                        a(href=file.link)
-                          small=file.source.dir+'/'
-                          =file.source.file
-                      .content(data-section-content)
-                        ul.side-nav
-                          each method in file.methods
-                            li
-                              a(href=file.link+'#'+method)= method
-                    else
-                      ul.side-nav.solo
-                        each method in file.methods
-                          li
-                            a(href='#'+method)= method
-
-
-      .small-12.large-9.columns
-        each comment in comments
-          article.comment
-            header
-              if comment.ctx
-                h1(id=comment.ctx.name)= comment.ctx.name
-                h5.subheader
-                  .label.radius.ctx-type=comment.ctx.type
-                  = comment.ctx.string
-
-            ul.no-bullet.tags
-              each tag in comment.tags
-                unless tag.type == 'api'
-                  li.tag
-                    span.type="@"+tag.type + ": "
-                    each value, key in tag
-                      if (['type'].indexOf(key) === -1)
-                        - if (key === 'types') value="{"+value+"}"
-                        span(class=key)= value
-
-            .section-container.code.auto(data-section="accordian", data-options="one_up: false;")
-              .section
-                p.title(data-section-title)
-                  a(href='#') Description
-                .content.description(data-section-content)
-                  !=comment.description.full
-              if comment.code
-                .section
-                  p.title(data-section-title)
-                    a(href='#') Source
-                  .content(data-section-content)
-                    pre
-                      code.language-javascript
-                        =comment.code
+  body(data-spy="scroll")
+    .alert.alert-warning This API documentation is under construnction and is, at the moment, very rough
+    .container
+      .row
+        .col-md-4(role="complimentary")
+          .sidebar(data-offset-top="60" data-offset-bottom="200")
+            each item in docs
+                .row(class='l'+item.level)
+                  .col-md-12
+                      a(href='#'+item.name)=item.name+(item.type==='method' ? "()" : "")
+        .col-md-8.content(role="main")
+          h1 ConstraintJS API
+          each item in docs
+            .row(class='l'+item.level,id=item.name)
+              .col-md-12.entry
+                .classname=item.name
+                each subinfo in item.subinfos
+                  .desc!=subinfo.description
+                  if subinfo.params.length > 0
+                    .params
+                      h5 Parameters:
+                      ul
+                        each param in subinfo.params
+                          li.param
+                            span.name=param.name
+                            span.type=param.types
+                            span.description=param.description
+                  if subinfo.returns
+                    .returns
+                      span.type=subinfo.returns.types
+                      span.description=subinfo.returns.description
+                if item.examples.length > 0
+                  .examples
+                    h5 Examples:
+                    each example in item.examples
+                      pre.example=example
+                .source
+                  each link in item.sourceLinks
+                    a.pull-right(target="_blank",href=link.link)=link.text
 
     include ./_footer.jade

@@ -64,7 +64,25 @@ if (program.source) {
 
   // Dox all those files
   files = formatter.doxFiles(source, target, { raw: program.raw }, files);
+  var doxval = formatter.compileDox(files);
 
+  // Set correct paths to produce the index.html file
+  var options = {};
+  if (program.title){
+  	options.title = program.title;
+  } else {
+  	options.title = 'Documentation';
+  }
+
+  // Render and save each file
+  var indexPath = path.relative(process.cwd(), target) + path.sep + 'index.html';
+  var output = formatter.render(doxval, options);
+    var dir = path.dirname(indexPath);
+    if (!fs.existsSync(dir)) {
+      mkdirp.sync(dir);
+    }
+  fs.writeFileSync(indexPath, output);
+/*
   // Set correct paths to produce the index.html file
   var indexPath = path.relative(process.cwd(), target) + path.sep + 'index.html';
   files.push({
@@ -93,7 +111,7 @@ if (program.source) {
 
     fs.writeFileSync(file.targetFile, output);
   });
-
+*/
 } else {
   // process stdin
   var buf = '',
